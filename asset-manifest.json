@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/korfac/static/css/main.1d384c41.css",
-    "main.js": "/korfac/static/js/main.91097fa0.js",
-    "static/js/453.68693753.chunk.js": "/korfac/static/js/453.68693753.chunk.js",
-    "index.html": "/korfac/index.html",
-    "main.1d384c41.css.map": "/korfac/static/css/main.1d384c41.css.map",
-    "main.91097fa0.js.map": "/korfac/static/js/main.91097fa0.js.map",
-    "453.68693753.chunk.js.map": "/korfac/static/js/453.68693753.chunk.js.map"
+    "main.css": "/ver3/static/css/main.1d384c41.css",
+    "main.js": "/ver3/static/js/main.adf6f139.js",
+    "static/js/453.68693753.chunk.js": "/ver3/static/js/453.68693753.chunk.js",
+    "index.html": "/ver3/index.html",
+    "main.1d384c41.css.map": "/ver3/static/css/main.1d384c41.css.map",
+    "main.adf6f139.js.map": "/ver3/static/js/main.adf6f139.js.map",
+    "453.68693753.chunk.js.map": "/ver3/static/js/453.68693753.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.1d384c41.css",
-    "static/js/main.91097fa0.js"
+    "static/js/main.adf6f139.js"
   ]
 }

@@ -482,7 +482,7 @@ const MyCards = () => {
 
     // 회사 이름으로 정렬
     return Object.values(grouped).sort((a, b) => a.company.localeCompare(b.company));
-  }, [searchTerm, selectedTags, sortBy, selectedLeadType]);
+  }, [searchTerm, selectedTags, sortBy, selectedLeadType, calculateLeadScore]);
 
   // 모든 태그 추출
   const allTags = useMemo(() => {

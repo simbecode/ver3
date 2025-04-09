@@ -13,7 +13,6 @@ import {
 } from '@mui/material';
 import {
   Home as HomeIcon,
-  Badge as BadgeIcon,
   Group as GroupIcon,
   Note as NoteIcon,
   Map as MapIcon,
@@ -21,6 +20,7 @@ import {
   Menu as MenuIcon,
   ChevronLeft as ChevronLeftIcon,
 } from '@mui/icons-material';
+import BadgeIcon from '@mui/icons-material/Badge';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const menuItems = [

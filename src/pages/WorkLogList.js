@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   Box,
   Typography,
@@ -36,6 +36,13 @@ import {
   Badge,
   Fab,
   Zoom,
+  Select,
+  FormControl,
+  InputLabel,
+  Tooltip,
+  Pagination,
+  Snackbar,
+  Alert,
 } from '@mui/material';
 import {
   Visibility as ViewIcon,
@@ -48,6 +55,7 @@ import {
   Notifications as NotificationsIcon,
   Refresh as RefreshIcon,
   Delete as DeleteIcon,
+  Close as CloseIcon,
 } from '@mui/icons-material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
@@ -219,6 +227,7 @@ const WorkLogList = () => {
   const [selectedStage, setSelectedStage] = useState('ALL');
   const [sortBy, setSortBy] = useState('date');
   const [sortOrder, setSortOrder] = useState('desc');
+  const [sortAnchorEl, setSortAnchorEl] = useState(null);
 
   // 검색 및 필터링 적용
   useEffect(() => {
@@ -286,11 +295,11 @@ const WorkLogList = () => {
 
   // 정렬 메뉴 토글
   const handleSortMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
+    setSortAnchorEl(event.currentTarget);
   };
 
   const handleSortMenuClose = () => {
-    setAnchorEl(null);
+    setSortAnchorEl(null);
   };
 
   // 정렬 방식 변경
@@ -637,8 +646,8 @@ const WorkLogList = () => {
 
         {/* 정렬 메뉴 */}
         <Menu
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
+          anchorEl={sortAnchorEl}
+          open={Boolean(sortAnchorEl)}
           onClose={handleSortMenuClose}
         >
           <MenuItem onClick={() => handleSortChange('date')}>

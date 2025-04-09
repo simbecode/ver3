@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import {
   Grid,
   Box,
@@ -439,7 +439,7 @@ const GroupCards = () => {
   };
 
   // 리드 스코어 계산
-  const calculateLeadScore = (card) => {
+  const calculateLeadScore = useCallback((card) => {
     let score = 0;
     
     // 기본 점수 (리드 타입에 따라)
@@ -456,7 +456,7 @@ const GroupCards = () => {
     
     // 최소 0, 최대 100으로 제한
     return Math.max(0, Math.min(100, score));
-  };
+  }, []);
 
   // 회사별로 카드 그룹화
   const groupedCards = useMemo(() => {

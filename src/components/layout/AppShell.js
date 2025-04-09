@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Drawer, AppBar, Toolbar, IconButton, Typography, useTheme, useMediaQuery } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
+import { Box, Drawer, AppBar, useTheme, useMediaQuery } from '@mui/material';
 import TopBar from './TopBar';
 import SideDrawer from './SideDrawer';
 

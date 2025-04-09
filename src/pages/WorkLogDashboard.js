@@ -1,44 +1,48 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   Box,
   Typography,
-  Paper,
   Grid,
   Card,
   CardContent,
-  CardHeader,
-  Divider,
-  Tabs,
-  Tab,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
   Button,
   IconButton,
-  Chip,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemSecondaryAction,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
   TextField,
-  Alert,
-  Snackbar,
-  CircularProgress,
-  Tooltip,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  ToggleButton,
+  ToggleButtonGroup,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  TablePagination,
+  Paper,
+  Chip,
   Badge,
+  Tooltip,
+  Pagination,
+  Snackbar,
+  Alert,
 } from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { ko } from 'date-fns/locale';
+import { format, startOfWeek, endOfWeek, eachDayOfInterval } from 'date-fns';
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
+import CloseIcon from '@mui/icons-material/Close';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import EditIcon from '@mui/icons-material/Edit';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 import {
   CalendarToday as CalendarIcon,
   Person as PersonIcon,
@@ -51,10 +55,6 @@ import {
   CheckCircle as CheckCircleIcon,
   Warning as WarningIcon,
   Error as ErrorIcon,
-  Notifications as NotificationsIcon,
-  Edit as EditIcon,
-  Delete as DeleteIcon,
-  Visibility as ViewIcon,
   FilterList as FilterIcon,
   Refresh as RefreshIcon,
   Download as DownloadIcon,
@@ -62,10 +62,6 @@ import {
   TrendingDown as TrendingDownIcon,
   TrendingFlat as TrendingFlatIcon,
 } from '@mui/icons-material';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
-import { format, startOfWeek, endOfWeek, eachDayOfInterval, isSameDay, isWithinInterval } from 'date-fns';
-import { ko } from 'date-fns/locale';
 
 // 고객 단계 정의
 const CUSTOMER_STAGES = [
@@ -402,25 +398,25 @@ const WorkLogDashboard = () => {
         <Paper sx={{ p: 2, mb: 3 }}>
           <Grid container spacing={2} alignItems="center">
             <Grid item xs={12} md={4}>
-              <Tabs
+              <ToggleButtonGroup
                 value={viewMode}
                 onChange={handleViewModeChange}
                 aria-label="view mode tabs"
                 centered
               >
-                <Tab 
-                  label="일별 보기" 
+                <ToggleButton 
                   value="daily" 
-                  icon={<CalendarIcon />} 
-                  iconPosition="start" 
-                />
-                <Tab 
-                  label="주간 보기" 
+                  aria-label="daily" 
+                >
+                  <CalendarIcon />
+                </ToggleButton>
+                <ToggleButton 
                   value="weekly" 
-                  icon={<CalendarIcon />} 
-                  iconPosition="start" 
-                />
-              </Tabs>
+                  aria-label="weekly" 
+                >
+                  <CalendarIcon />
+                </ToggleButton>
+              </ToggleButtonGroup>
             </Grid>
             <Grid item xs={12} md={4}>
               <DatePicker
@@ -651,7 +647,7 @@ const WorkLogDashboard = () => {
                                 size="small" 
                                 onClick={() => handleViewWorkLog(workLog)}
                               >
-                                <ViewIcon />
+                                <VisibilityIcon />
                               </IconButton>
                             </Tooltip>
                             <Tooltip title="수정">

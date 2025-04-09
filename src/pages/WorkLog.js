@@ -2,39 +2,47 @@ import React, { useState } from 'react';
 import {
   Box,
   Typography,
-  Paper,
   TextField,
   Button,
   Grid,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  IconButton,
-  Divider,
-  Chip,
-  FormControlLabel,
-  Checkbox,
-  Alert,
-  Snackbar,
-  CircularProgress,
-  Card,
-  CardContent,
-  CardActions,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemSecondaryAction,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
+  IconButton,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemSecondaryAction,
+  Divider,
+  Snackbar,
+  Alert,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+} from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { ko } from 'date-fns/locale';
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
+import CloseIcon from '@mui/icons-material/Close';
+import {
+  Paper,
+  Chip,
+  FormControlLabel,
+  Checkbox,
+  CircularProgress,
+  Card,
+  CardContent,
+  CardActions,
+  ListItemSecondaryAction,
   InputAdornment,
   Tooltip,
 } from '@mui/material';
 import {
-  Add as AddIcon,
-  Delete as DeleteIcon,
   Edit as EditIcon,
   Save as SaveIcon,
   CalendarToday as CalendarIcon,
@@ -51,10 +59,8 @@ import {
   Error as ErrorIcon,
   Notifications as NotificationsIcon,
 } from '@mui/icons-material';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider, DatePicker, TimePicker } from '@mui/x-date-pickers';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { format } from 'date-fns';
-import { ko } from 'date-fns/locale';
 
 // 고객 단계 정의
 const CUSTOMER_STAGES = [

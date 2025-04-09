@@ -27,7 +27,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Router>
+      <Router basename="/ver3">
         <AppShell>
           <Routes>
             <Route path="/" element={<Home />} />

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Box, Drawer, AppBar, Toolbar, IconButton, Typography, useTheme, useMediaQuery } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import SideDrawer from './SideDrawer';
 import TopBar from './TopBar';
+import SideDrawer from './SideDrawer';
 
 const drawerWidth = 240;
 const collapsedDrawerWidth = 72;

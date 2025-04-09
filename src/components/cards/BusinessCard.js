@@ -23,7 +23,6 @@ import {
   ListItemIcon,
   Tabs,
   Tab,
-  Paper,
 } from '@mui/material';
 import {
   Phone as PhoneIcon,

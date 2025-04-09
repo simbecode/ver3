@@ -513,7 +513,7 @@ const GroupCards = () => {
 
     // 회사 이름으로 정렬
     return Object.values(grouped).sort((a, b) => a.company.localeCompare(b.company));
-  }, [searchTerm, selectedTags, sortBy, selectedLeadType]);
+  }, [searchTerm, selectedTags, sortBy, selectedLeadType, calculateLeadScore]);
 
   // 팀별로 카드 그룹화
   const groupedTeamCards = useMemo(() => {
@@ -569,7 +569,7 @@ const GroupCards = () => {
 
     // 팀 이름으로 정렬
     return Object.values(grouped).sort((a, b) => a.team.localeCompare(b.team));
-  }, [searchTerm, selectedTags, sortBy, selectedLeadType]);
+  }, [searchTerm, selectedTags, sortBy, selectedLeadType, calculateLeadScore]);
 
   // 모든 태그 추출
   const allTags = useMemo(() => {

@@ -32,9 +32,9 @@ import BusinessCard from '../components/cards/BusinessCard';
 
 // 고객 분류 단계 정의
 const LEAD_TYPES = {
-  COLD: { label: 'Cold Leads', color: 'info', icon: '🧊', description: '우리 제품/브랜드를 잘 모름, 연락처만 확보된 상태' },
-  WARM: { label: 'Warm Leads', color: 'warning', icon: '🔥', description: '일정 관심 표현, 문의/자료 요청 등 일부 행동' },
-  HOT: { label: 'Hot Leads', color: 'error', icon: '🔥', description: '구매 의사 확실, 예산/타이밍/결정권 보유' },
+  COLD: { label: 'Cold Leads', color: 'info', description: '우리 제품/브랜드를 잘 모름, 연락처만 확보된 상태' },
+  WARM: { label: 'Warm Leads', color: 'warning', description: '일정 관심 표현, 문의/자료 요청 등 일부 행동' },
+  HOT: { label: 'Hot Leads', color: 'error', description: '구매 의사 확실, 예산/타이밍/결정권 보유' },
 };
 
 // BANT 평가 기준 정의
@@ -424,7 +424,8 @@ const GroupCards = () => {
   const [expandedCompany, setExpandedCompany] = useState(null);
   const [tabValue, setTabValue] = useState(0);
   const [selectedLeadType, setSelectedLeadType] = useState('all');
-  const [showBantInfo, setShowBantInfo] = useState(false);
+  const [showLeadInfo, setShowLeadInfo] = useState(true);
+  const [showTagInfo, setShowTagInfo] = useState(true);
   const [showScoringInfo, setShowScoringInfo] = useState(false);
 
   // 리드 타입 결정 (태그 기반)
@@ -591,9 +592,14 @@ const GroupCards = () => {
     setSelectedLeadType(type);
   };
 
-  // BANT 정보 토글 핸들러
-  const handleBantInfoToggle = () => {
-    setShowBantInfo(!showBantInfo);
+  // 리드 타입 정보 토글 핸들러
+  const handleLeadInfoToggle = () => {
+    setShowLeadInfo(!showLeadInfo);
+  };
+
+  // 태그 정보 토글 핸들러
+  const handleTagInfoToggle = () => {
+    setShowTagInfo(!showTagInfo);
   };
 
   // 스코어링 정보 토글 핸들러
@@ -616,9 +622,16 @@ const GroupCards = () => {
 
       {/* 리드 타입 필터 */}
       <Box sx={{ mb: 3 }}>
-        <Typography variant="subtitle2" gutterBottom>
-          고객 분류 필터:
-        </Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+          <Typography variant="subtitle2" sx={{ mr: 1 }}>
+            고객 분류 필터:
+          </Typography>
+          <Tooltip title="고객 분류 기준 정보">
+            <IconButton size="small" onClick={handleLeadInfoToggle}>
+              <InfoIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        </Box>
         <ButtonGroup variant="outlined" aria-label="고객 분류 필터">
           <Button 
             onClick={() => handleLeadTypeFilter('all')}
@@ -631,24 +644,80 @@ const GroupCards = () => {
             variant={selectedLeadType === 'hot' ? 'contained' : 'outlined'}
             color="error"
           >
-            {LEAD_TYPES.HOT.icon} Hot Leads
+            Hot Leads
           </Button>
           <Button 
             onClick={() => handleLeadTypeFilter('warm')}
             variant={selectedLeadType === 'warm' ? 'contained' : 'outlined'}
             color="warning"
           >
-            {LEAD_TYPES.WARM.icon} Warm Leads
+            Warm Leads
           </Button>
           <Button 
             onClick={() => handleLeadTypeFilter('cold')}
             variant={selectedLeadType === 'cold' ? 'contained' : 'outlined'}
             color="info"
           >
-            {LEAD_TYPES.COLD.icon} Cold Leads
+            Cold Leads
           </Button>
         </ButtonGroup>
       </Box>
+
+      {/* 고객 분류 정보 팝업 */}
+      {showLeadInfo && (
+        <Paper sx={{ p: 2, mb: 3, bgcolor: 'background.default' }}>
+          <Box sx={{ mb: 2 }}>
+            <Typography variant="subtitle1" gutterBottom fontWeight="bold">
+              고객 분류 기준 (Leads)
+            </Typography>
+            <Grid container spacing={2}>
+              {Object.entries(LEAD_TYPES).map(([key, value]) => (
+                <Grid item xs={12} md={4} key={key}>
+                  <Box sx={{ display: 'flex', alignItems: 'flex-start', p: 1, bgcolor: 'background.paper', borderRadius: 1 }}>
+                    <Box>
+                      <Typography variant="subtitle2" color={`${value.color}.main`}>{value.label}</Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {value.description}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+          <Divider sx={{ my: 2 }} />
+          <Box sx={{ mt: 2 }}>
+            <Typography variant="subtitle1" gutterBottom fontWeight="bold">
+              BANT 평가 기준
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+              BANT는 잠재 고객의 구매 가능성을 평가하는 영업 프레임워크로, 다음 네 가지 요소를 확인합니다:
+            </Typography>
+            <Grid container spacing={2}>
+              {Object.entries(BANT_CRITERIA).map(([key, value]) => (
+                <Grid item xs={12} sm={6} key={key}>
+                  <Box sx={{ display: 'flex', alignItems: 'flex-start', p: 1, bgcolor: 'background.paper', borderRadius: 1 }}>
+                    <Typography variant="body1" sx={{ mr: 1 }}>
+                      {value.icon}
+                    </Typography>
+                    <Box>
+                      <Typography variant="subtitle2">{value.label}</Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {value.description}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+          <Box sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end' }}>
+            <Button size="small" onClick={handleLeadInfoToggle}>
+              닫기
+            </Button>
+          </Box>
+        </Paper>
+      )}
 
       <Box sx={{ mb: 4 }}>
         <Grid container spacing={2}>
@@ -686,17 +755,15 @@ const GroupCards = () => {
         </Grid>
 
         <Box sx={{ mt: 2 }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-            <Typography variant="subtitle2">
+          <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+            <Typography variant="subtitle2" sx={{ mr: 1 }}>
               태그 필터:
             </Typography>
-            <Box>
-              <Tooltip title="BANT 평가 기준 정보">
-                <IconButton size="small" onClick={handleBantInfoToggle}>
-                  <InfoIcon fontSize="small" />
-                </IconButton>
-              </Tooltip>
-            </Box>
+            <Tooltip title="태그 필터 정보">
+              <IconButton size="small" onClick={handleTagInfoToggle}>
+                <InfoIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
           </Box>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
             {allTags.map(tag => (
@@ -717,31 +784,70 @@ const GroupCards = () => {
         </Box>
       </Box>
 
-      {/* BANT 정보 팝업 */}
-      {showBantInfo && (
+      {/* 태그 필터 정보 팝업 */}
+      {showTagInfo && (
         <Paper sx={{ p: 2, mb: 3, bgcolor: 'background.default' }}>
-          <Typography variant="subtitle1" gutterBottom>
-            BANT 평가 기준
+          <Typography variant="subtitle1" gutterBottom fontWeight="bold">
+            태그 필터 사용 방법
           </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+            태그는 고객의 특성, 산업, 상태 등을 나타내는 키워드입니다. 태그를 클릭하여 필터링할 수 있습니다.
+          </Typography>
+          
           <Grid container spacing={2}>
-            {Object.entries(BANT_CRITERIA).map(([key, value]) => (
-              <Grid item xs={12} sm={6} key={key}>
-                <Box sx={{ display: 'flex', alignItems: 'flex-start' }}>
-                  <Typography variant="body2" sx={{ mr: 1 }}>
-                    {value.icon}
-                  </Typography>
-                  <Box>
-                    <Typography variant="subtitle2">{value.label}</Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {value.description}
-                    </Typography>
-                  </Box>
+            <Grid item xs={12} md={6}>
+              <Box sx={{ p: 1, bgcolor: 'background.paper', borderRadius: 1 }}>
+                <Typography variant="subtitle2" gutterBottom>고객 상태 태그</Typography>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                  <Chip size="small" label="구매검토중" color="error" />
+                  <Chip size="small" label="예산확보" color="error" />
+                  <Chip size="small" label="결정자접촉중" color="error" />
+                  <Chip size="small" label="상담희망" color="warning" />
+                  <Chip size="small" label="문의완료" color="warning" />
+                  <Chip size="small" label="자료요청" color="warning" />
+                  <Chip size="small" label="견적받음" color="warning" />
+                  <Chip size="small" label="리스트만_있는" color="info" />
+                  <Chip size="small" label="DM만보냄" color="info" />
+                  <Chip size="small" label="첫접촉대기" color="info" />
                 </Box>
-              </Grid>
-            ))}
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Box sx={{ p: 1, bgcolor: 'background.paper', borderRadius: 1 }}>
+                <Typography variant="subtitle2" gutterBottom>산업/직무 태그</Typography>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                  <Chip size="small" label="IT" />
+                  <Chip size="small" label="개발" />
+                  <Chip size="small" label="마케팅" />
+                  <Chip size="small" label="디자인" />
+                  <Chip size="small" label="스타트업" />
+                  <Chip size="small" label="AI" />
+                  <Chip size="small" label="프론트엔드" />
+                  <Chip size="small" label="백엔드" />
+                  <Chip size="small" label="UI/UX" />
+                </Box>
+              </Box>
+            </Grid>
           </Grid>
+          
+          <Box sx={{ mt: 2 }}>
+            <Typography variant="subtitle2" gutterBottom>태그 사용 팁</Typography>
+            <ul>
+              <li>
+                <Typography variant="body2">
+                  여러 태그를 선택하면 모든 태그를 포함하는 고객만 표시됩니다(AND 검색).
+                </Typography>
+              </li>
+              <li>
+                <Typography variant="body2">
+                  고객 상태 태그는 자동으로 고객 분류(Hot/Warm/Cold Leads)와 연결됩니다.
+                </Typography>
+              </li>
+            </ul>
+          </Box>
+          
           <Box sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end' }}>
-            <Button size="small" onClick={handleBantInfoToggle}>
+            <Button size="small" onClick={handleTagInfoToggle}>
               닫기
             </Button>
           </Box>
